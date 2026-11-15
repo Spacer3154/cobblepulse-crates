@@ -385,15 +385,22 @@ final class ClientSelfTest {
                 }
                 case 20 -> shot(mc, "live_monde");
                 case 22 -> click(mc, crateAt(0));
+                case 40 -> {
+                    if (mc.screen instanceof CrateScreen s) s.debugHover = 8;
+                }
                 case 60 -> shot(mc, "live_apercu");
                 case 62 -> {
-                    if (mc.screen instanceof CrateScreen s) s.testOpen();
-                    else Crates.LOG.error("[Crates][livetest] apercu non ouvert ({})", mc.screen);
+                    if (mc.screen instanceof CrateScreen s) {
+                        s.debugHover = -1;
+                        s.testOpen();
+                    } else {
+                        Crates.LOG.error("[Crates][livetest] apercu non ouvert ({})", mc.screen);
+                    }
                 }
                 case 100 -> shot(mc, "live_roulette");
-                case 200 -> shot(mc, "live_roulette_resultat");
-                case 202 -> mc.setScreen(null);
-                case 214 -> shot(mc, "live_hologramme");
+                case 102 -> mc.setScreen(null);
+                case 112 -> shot(mc, "live_ouverture_monde");
+                case 200 -> shot(mc, "live_hologramme");
                 case 250 -> look(mc, crateAt(1));
                 case 252 -> click(mc, crateAt(1));
                 case 290 -> {
@@ -416,7 +423,11 @@ final class ClientSelfTest {
                 case 550 -> shot(mc, "live_voeu_apres");
                 case 552 -> Ui.send("admin_open");
                 case 590 -> shot(mc, "live_editeur");
-                case 620 -> {
+                case 592 -> {
+                    if (mc.screen instanceof AdminScreen a) a.testTab(0, 1, "obsidienne");
+                }
+                case 610 -> shot(mc, "live_editeur_obsidienne");
+                case 640 -> {
                     Crates.LOG.info("[Crates][livetest] fin");
                     mc.stop();
                 }

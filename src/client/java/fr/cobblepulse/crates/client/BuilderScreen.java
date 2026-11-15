@@ -524,12 +524,12 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
         if (isSel) Ui.frame(g, x, y, w, h, Ui.argb(0xFF, IRIS));
         if (!has) return;
         if (wide) {
-            Ui.item(g, Ui.item(Ui.str(m, "icon", "")), x + 3, y + 3, 1.5f, false);
+            Ui.icon(g, Ui.item(Ui.str(m, "icon", "")), x + 15, y + 15, 1.5f, 1.5f, false);
             g.drawString(font, Ui.comp(Ui.str(m, "name", "")), x + 30, y + 5, 0xFFFFFFFF, false);
             String sub = "Nv. " + Ui.lng(m, "level", 1) + (Ui.bool(m, "shiny", false) ? "  ★" : "");
             Ui.text(g, sub, x + 30, y + 17, Ui.bool(m, "shiny", false) ? Ui.GOLD : Ui.MUTED);
         } else {
-            Ui.item(g, Ui.item(Ui.str(m, "icon", "")), x + (w - 16) / 2, y + (h - 16) / 2, 1f, false);
+            Ui.icon(g, Ui.item(Ui.str(m, "icon", "")), x + w / 2, y + h / 2, 1f, 1.4f, false);
             if (Ui.bool(m, "shiny", false)) Ui.scaled(g, "★", x + w - 6, y + 1, Ui.GOLD, 0.75f);
         }
         slotHits.add(new int[]{x, y, w, h});
@@ -545,7 +545,7 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
         int rw = pw - listW() - 26;
         int y = py + 32;
         Ui.panel(g, rx, y, 70, 70, Ui.CARD, Ui.BORDER);
-        Ui.item(g, Ui.item(Ui.str(sel, "icon", "")), rx + 7, y + 7, 3.5f, false);
+        Ui.icon(g, Ui.item(Ui.str(sel, "icon", "")), rx + 35, y + 35, 3.5f, 1.6f, false);
         int tx = rx + 78;
         g.drawString(font, Ui.comp(Ui.str(sel, "name", "")), tx, y + 2, 0xFFFFFFFF, true);
         String info = Ui.comp(Ui.str(sel, "species", "")).getString() + "  ·  Nv. " + Ui.lng(sel, "level", 1) + "  ·  Forme " + Ui.str(sel, "form", "");

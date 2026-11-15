@@ -206,7 +206,7 @@ public final class RewardEditScreen extends EditScreen {
         int rc = rarityColors.get(Math.min(idx, rarityColors.size() - 1));
         Ui.panel(g, x, y, 100, 100, Ui.CARD, Ui.argb(0xFF, rc));
         for (int i = 0; i < 20; i++) g.fill(x + 1, y + 98 - i, x + 99, y + 99 - i, Ui.argb((int) (0x60 * (1 - i / 20f)), rc));
-        Ui.item(g, ClientData.rewardIcon(obj), x + 18, y + 14, 4f, true);
+        Ui.icon(g, ClientData.rewardIcon(obj), x + 50, y + 46, 4f, 1.4f, true);
         String label = ClientData.rewardLabel(obj);
         int ly = y + 106;
         for (FormattedCharSequence l : Ui.font().split(Component.literal(label), 104)) {

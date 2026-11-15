@@ -427,7 +427,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
             int rc = (int) Ui.lng(Ui.obj(r, "rarity"), "color", 0xB0B8C4);
             boolean hov = debugHover >= 0 ? debugHover == i : Ui.in(mouseX, mouseY, cx + 2, cy + 2, CELL_W - 4, CELL_H - 4) && mouseY >= top && mouseY < bottom;
             card(g, cx + 2, cy + 2, CELL_W - 4, CELL_H - 4, rc, hov);
-            Ui.item(g, Ui.item(Ui.str(r, "icon", "")), cx + CELL_W / 2 - 12, cy + 7, 1.5f, true);
+            Ui.icon(g, Ui.item(Ui.str(r, "icon", "")), cx + CELL_W / 2, cy + 19, 1.5f, 1.5f, true);
             String pct = Ui.str(r, "pct", "");
             Ui.scaled(g, pct, cx + CELL_W / 2 - (int) (font.width(pct) * 0.75f / 2), cy + 37, hov ? 0xFFFFFFFF : Ui.lighten(rc, 0.35f) | 0xFF000000, 0.75f);
             if (hov) hovered = r;
@@ -514,7 +514,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
                 for (int k = 1; k <= 3; k++) Ui.frame(g, x - k, y - k, CARD_W + 2 * k, h + 2 * k, Ui.argb((int) (0xC0 * pulse / k), Ui.lighten(rc, 0.4f)));
             }
             ItemStack icon = win && result != null ? Ui.item(Ui.str(result, "icon", "")) : Ui.item(Ui.str(r, "icon", ""));
-            Ui.item(g, icon, x + CARD_W / 2 - 16, y + 12, 2f, true);
+            Ui.icon(g, icon, x + CARD_W / 2, y + 28, 2f, 1.5f, true);
         }
         // Fondus sur les bords
         Ui.hgradient(g, rx, ry, 60, rh, 0xF00B0E13, 0x000B0E13);
@@ -547,7 +547,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
         Ui.frame(g, x, y, w, h, Ui.argb(0xFF, rc));
         float pulse = (float) (0.5 + 0.5 * Math.sin((System.currentTimeMillis() - resultAt) / 200.0));
         for (int k = 0; k < 6; k++) g.fill(x + 8 - k, y + 7 - k, x + 40 + k, y + 39 + k, Ui.argb((int) (0x22 * pulse), rc));
-        Ui.item(g, Ui.item(Ui.str(result, "icon", "")), x + 8, y + 7, 2f, true);
+        Ui.icon(g, Ui.item(Ui.str(result, "icon", "")), x + 24, y + 23, 2f, 1.4f, true);
         Ui.text(g, "Vous avez obtenu", x + 46, y + 8, Ui.MUTED);
         g.drawString(font, name, x + 46, y + 20, 0xFFFFFFFF, true);
         Ui.scaled(g, rarity, x + 46, y + 33, Ui.argb(0xFF, rc), 0.75f);
@@ -603,7 +603,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
             boolean win = mode == Mode.RESULT && k == wheelWinner;
             ItemStack icon = win && result != null ? Ui.item(Ui.str(result, "icon", "")) : Ui.item(Ui.str(seg, "icon", ""));
             float sc = win ? 1.6f + 0.15f * (float) Math.sin((System.currentTimeMillis() - resultAt) / 150.0) : 1.25f;
-            Ui.item(g, icon, ix - (int) (8 * sc), iy - (int) (8 * sc), sc, false);
+            Ui.icon(g, icon, ix, iy, sc, 1.4f, false);
         }
         Ui.item(g, Ui.item(Ui.str(Ui.obj(data, "key"), "icon", "")), cx - 8, cy - 8, 1f, false);
         if (mode == Mode.RESULT) resultPanel(g, bottom + 8);

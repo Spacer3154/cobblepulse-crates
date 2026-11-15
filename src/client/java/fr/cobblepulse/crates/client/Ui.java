@@ -245,6 +245,21 @@ public final class Ui {
         g.pose().popPose();
     }
 
+    /**
+     * Objet centre sur (cx, cy) a l'echelle donnee ; les icones de Pokemon (modele 3D, plus petit qu'un objet)
+     * sont agrandies de {@code pokemonBoost}.
+     */
+    public static void icon(GuiGraphics g, ItemStack s, int cx, int cy, float scale, float pokemonBoost, boolean decorations) {
+        if (s == null || s.isEmpty()) return;
+        float sc = s.getItem() instanceof com.cobblemon.mod.common.item.PokemonItem ? scale * pokemonBoost : scale;
+        g.pose().pushPose();
+        g.pose().translate(cx - 8 * sc, cy - 8 * sc, 0);
+        g.pose().scale(sc, sc, 1f);
+        g.renderItem(s, 0, 0);
+        if (decorations) g.renderItemDecorations(font(), s, 0, 0);
+        g.pose().popPose();
+    }
+
     public static String cut(String s, int width) {
         Font f = font();
         if (f.width(s) <= width) return s;

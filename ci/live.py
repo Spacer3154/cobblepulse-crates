@@ -69,7 +69,7 @@ def cmd(c):
 ok = wait_for("Done (", 900)
 log("serveur pret : %s" % ok)
 if ok:
-    for c in ["op CratesTest", "gamerule doDaylightCycle false", "gamerule doWeatherCycle false", "time set 6000", "weather clear",
+    for c in ["gamerule doDaylightCycle false", "gamerule doWeatherCycle false", "time set 6000", "weather clear",
               "lootbox selftest live"]:
         cmd(c)
     version = "fabric:1.21.1:" + props.get("loader_version", "0.19.5")

@@ -55,6 +55,8 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
 
     private record Hit(int x, int y, int w, int h, Runnable action) {}
 
+    private String pendingTip;
+
     public AdminScreen(JsonObject data) {
         super(Component.literal("Éditeur des caisses"));
         load(data, true);
@@ -443,6 +445,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
     public void render(GuiGraphics g, int mouseX, int mouseY, float partialTick) {
         super.render(g, mouseX, mouseY, partialTick);
         hits.clear();
+        pendingTip = null;
         Ui.text(g, "✦ Éditeur des caisses", px + 8, py + 9, Ui.GOLD);
         int top = py + 28;
         int bottom = py + ph - 6;
@@ -461,6 +464,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
             }
         }
         if (form != null) form.render(g, mouseX, mouseY);
+        if (pendingTip != null) g.renderTooltip(font, Component.literal(pendingTip), mouseX, mouseY);
         int my = bottom - 15;
         if (!toast.isEmpty() && System.currentTimeMillis() < toastUntil) {
             int x0 = tab == 0 ? px + listW() + 14 : px + 10;
@@ -502,12 +506,11 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
             g.fill(x, y, x + 2, y + ROW - 2, Ui.argb(0xFF, col));
             Ui.item(g, Ui.itemById(Ui.str(c, "cle", "")), x + 5, y + 3, 1f, false);
             String name = ClientData.strip(Ui.str(c, "nom", id));
-            Ui.text(g, Ui.cut((dirty.contains(id) ? "* " : "") + name, w - 30), x + 24, y + 3, sel ? Ui.TEXT : Ui.lighten(col, 0.2f) | 0xFF000000);
+            Ui.text(g, Ui.cut((dirty.contains(id) ? "* " : "") + name, w - 46), x + 24, y + 3, sel ? Ui.TEXT : Ui.lighten(col, 0.2f) | 0xFF000000);
             String info = Ui.arr(c, "recompenses").size() + " lots · " + Ui.arr(c, "_links").size() + " cont.";
             Ui.scaled(g, info, x + 24, y + 13, Ui.MUTED, 0.75f);
-            if (Ui.bool(c, "maintenance", false)) {
-                Ui.scaled(g, "MAINT.", x + w - 30, y + 13, Ui.ERROR, 0.75f);
-            }
+            boolean maint = Ui.bool(c, "maintenance", false);
+            if (maint) Ui.scaled(g, "MAINT.", x + w - 46, y + 13, Ui.ERROR, 0.75f);
             hits.add(new Hit(x, Math.max(y, y0), w, Math.min(y + ROW - 2, bottom) - Math.max(y, y0), () -> {
                 if (!id.equals(selected)) {
                     if (form != null) formScroll = 0;
@@ -517,6 +520,16 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
                     rebuild();
                 }
             }));
+            if (perm("toggle") && y >= y0 && y + ROW - 2 <= bottom) {
+                smallButton(g, mouseX, mouseY, x + w - 17, y + 4, "⏻", maint ? Ui.ERROR : Ui.OK,
+                        maint ? "Maintenance activée — clic pour la désactiver" : "Clic pour mettre la caisse en maintenance", () -> {
+                            c.addProperty("maintenance", !maint);
+                            JsonObject a = new JsonObject();
+                            a.addProperty("id", id);
+                            Ui.send("admin_toggle", a);
+                            rebuild();
+                        });
+            }
         }
         g.disableScissor();
     }
@@ -527,7 +540,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
         Ui.frame(g, x, y, 14, 14, hov ? Ui.ACCENT : Ui.BORDER);
         Ui.centered(g, label, x + 7, y + 3, color);
         hits.add(new Hit(x, y, 14, 14, action));
-        if (hov && tip != null) g.renderTooltip(font, Component.literal(tip), mouseX, mouseY);
+        if (hov && tip != null) pendingTip = tip;
     }
 
     private void rewardList(GuiGraphics g, int mouseX, int mouseY, int x, int y0, int w, int h, JsonObject c) {
@@ -560,7 +573,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
             g.fill(x, y, x + w, y + ROW - 2, hov ? Ui.CARD_ON : Ui.CARD);
             g.fill(x, y, x + 2, y + ROW - 2, Ui.argb(0xFF, col));
             ItemStack icon = ClientData.rewardIcon(r);
-            Ui.item(g, icon, x + 5, y + 3, 1f, true);
+            Ui.icon(g, icon, x + 13, y + 11, 1f, 1.3f, true);
             double wgt = Math.max(0, Ui.dbl(r, "poids", 0));
             String pct = total <= 0 ? "0 %" : String.format(Locale.FRANCE, "%.2f %%", wgt / total * 100);
             Ui.text(g, Ui.cut(ClientData.rewardLabel(r), w - 230), x + 26, y + 3, Ui.TEXT);

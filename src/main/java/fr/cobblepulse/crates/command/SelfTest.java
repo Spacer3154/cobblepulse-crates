@@ -614,6 +614,8 @@ public final class SelfTest {
     public static void onJoin(ServerPlayer p) {
         if (liveChest == null || !"CratesTest".equals(p.getGameProfile().getName())) return;
         ServerLevel level = p.serverLevel();
+        // Operateur (le pseudo hors ligne n'a pas le meme UUID que celui resolu par /op)
+        p.getServer().getPlayerList().op(p.getGameProfile());
         p.teleportTo(level, liveChest.getX() + 2.0, liveChest.getY(), liveChest.getZ() - 3.0, 0f, 20f);
         p.getInventory().clearContent();
         p.getInventory().add(new ItemStack(key(KeyType.OBSIDIENNE), 5));
