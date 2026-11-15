@@ -36,15 +36,14 @@ jobs:
         run: |
           ./gradlew exportDeps --no-daemon > out/deps.log 2>&1 || true
           if [ -d build/deps ]; then
+            python3 ci/slim_jars.py build/deps > out/deps-list.txt 2>&1 || true
             cd build/deps
-            ls -la > ../deps-list.txt
             git init -q -b ci-deps
             git config user.name "crates-ci"
             git config user.email "ci@users.noreply.github.com"
             git add -A
             git commit -qm "Compile classpath ${GITHUB_SHA}"
-            git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-deps
-            cp ../deps-list.txt ../../out/ || true
+            git push -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-deps >> ../../out/deps.log 2>&1 || echo "push ci-deps en echec" >> ../../out/deps.log
           fi
 
       - name: Build
