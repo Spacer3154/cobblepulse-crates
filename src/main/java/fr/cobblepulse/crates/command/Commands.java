@@ -82,6 +82,7 @@ public final class Commands {
                 .then(literal("selftest").requires(src -> SelfTest.enabled() && src.hasPermission(2))
                         .executes(ctx -> SelfTest.run(ctx.getSource()))
                         .then(literal("persisted").executes(ctx -> SelfTest.persisted(ctx.getSource())))
+                        .then(literal("live").executes(ctx -> SelfTest.live(ctx.getSource())))
                         .then(literal("report").executes(ctx -> SelfTest.report(ctx.getSource())))));
         d.register(literal("cpbuilder").requires(Perms.playerReq(Perms.BUILDER_OPEN)).executes(ctx -> {
             ServerPlayer p = player(ctx);

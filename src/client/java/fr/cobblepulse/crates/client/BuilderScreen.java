@@ -143,6 +143,10 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
         rebuild();
     }
 
+    void testConfirm() {
+        confirm();
+    }
+
     private void select(JsonObject m) {
         sel = m;
         selUuid = Ui.str(m, "uuid", null);

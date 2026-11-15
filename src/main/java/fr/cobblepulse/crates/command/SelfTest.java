@@ -580,6 +580,56 @@ public final class SelfTest {
         return 1;
     }
 
+    // ------------------------------------------------------------------ Test de bout en bout (vrai client)
+
+    private static BlockPos liveChest;
+    private static BlockPos liveBarrel;
+
+    /** Prepare deux caisses devant le point d'apparition pour le client de test (ci/live.py). */
+    public static int live(CommandSourceStack src) {
+        ServerLevel level = src.getServer().overworld();
+        BlockPos spawn = level.getSharedSpawnPos();
+        int x = spawn.getX();
+        int z = spawn.getZ();
+        level.getChunk(new BlockPos(x, 64, z));
+        int y = level.getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x + 2, z + 3);
+        for (int dx = -2; dx <= 6; dx++) {
+            for (int dz = -1; dz <= 7; dz++) {
+                level.setBlock(new BlockPos(x + dx, y - 1, z + dz), Blocks.POLISHED_DEEPSLATE.defaultBlockState(), 3);
+                for (int dy = 0; dy < 4; dy++) level.setBlock(new BlockPos(x + dx, y + dy, z + dz), Blocks.AIR.defaultBlockState(), 3);
+            }
+        }
+        liveChest = new BlockPos(x + 1, y, z + 4);
+        liveBarrel = new BlockPos(x + 4, y, z + 4);
+        level.setBlock(liveChest, Blocks.CHEST.defaultBlockState().setValue(net.minecraft.world.level.block.ChestBlock.FACING, net.minecraft.core.Direction.NORTH), 3);
+        level.setBlock(liveBarrel, Blocks.BARREL.defaultBlockState().setValue(net.minecraft.world.level.block.BarrelBlock.FACING, net.minecraft.core.Direction.UP), 3);
+        Links.link(level, liveChest, "obsidienne");
+        Links.link(level, liveBarrel, "songes");
+        Net.syncAllPositions();
+        Crates.LOG.info("[Crates][selftest] live : caisses en {} et {}", liveChest.toShortString(), liveBarrel.toShortString());
+        return 1;
+    }
+
+    /** Joueur de test connecte : place devant les caisses, cles, Voeux ADN et equipe. */
+    public static void onJoin(ServerPlayer p) {
+        if (liveChest == null || !"CratesTest".equals(p.getGameProfile().getName())) return;
+        ServerLevel level = p.serverLevel();
+        p.teleportTo(level, liveChest.getX() + 2.0, liveChest.getY(), liveChest.getZ() - 3.0, 0f, 20f);
+        p.getInventory().clearContent();
+        p.getInventory().add(new ItemStack(key(KeyType.OBSIDIENNE), 5));
+        p.getInventory().add(new ItemStack(key(KeyType.SONGES), 5));
+        p.getInventory().add(new ItemStack(ModItems.VOEU_ADN, 20));
+        clearParty(p);
+        for (String spec : List.of("vulpix level=20 nature=hardy", "eevee level=18 shiny=yes", "dratini level=30", "rotom level=25")) {
+            try {
+                Cobblemon.INSTANCE.getStorage().getParty(p).add(PokemonProperties.Companion.parse(spec).create());
+            } catch (Throwable t) {
+                Crates.LOG.warn("[Crates][selftest] live : {} : {}", spec, t.toString());
+            }
+        }
+        Crates.LOG.info("[Crates][selftest] live : joueur pret");
+    }
+
     /** Acces differe aux objets Cobblemon (resolus par identifiant). */
     private enum BuiltinItem {
         RARE_CANDY("cobblemon:rare_candy");

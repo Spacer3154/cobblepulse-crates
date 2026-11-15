@@ -62,7 +62,9 @@ public final class Crates implements ModInitializer {
             CrateService.tick(s);
         });
         ServerPlayConnectionEvents.JOIN.register((handler, sender, s) -> Scheduler.later(10, () -> {
-            if (!handler.player.hasDisconnected()) Net.sendPositions(handler.player);
+            if (handler.player.hasDisconnected()) return;
+            Net.sendPositions(handler.player);
+            if (fr.cobblepulse.crates.command.SelfTest.enabled()) fr.cobblepulse.crates.command.SelfTest.onJoin(handler.player);
         }));
         ServerPlayConnectionEvents.DISCONNECT.register((handler, s) -> CrateService.onDisconnect(handler.player));
         ServerEntityWorldChangeEvents.AFTER_PLAYER_CHANGE_WORLD.register((player, origin, destination) -> Net.sendPositions(player));

@@ -322,6 +322,112 @@ final class ClientSelfTest {
         }
     }
 
+    // ------------------------------------------------------------------ Test de bout en bout (connecte au serveur)
+
+    private static int liveStart = -1;
+
+    static void installLive() {
+        ClientTickEvents.END_CLIENT_TICK.register(ClientSelfTest::liveTick);
+    }
+
+    private static net.minecraft.core.BlockPos crateAt(int index) {
+        List<net.minecraft.core.BlockPos> l = new ArrayList<>();
+        for (Long v : fr.cobblepulse.crates.crate.Links.CLIENT_POSITIONS) l.add(net.minecraft.core.BlockPos.of(v));
+        l.sort(Comparator.comparingInt(net.minecraft.core.BlockPos::getX));
+        return l.isEmpty() ? null : l.get(Math.min(index, l.size() - 1));
+    }
+
+    private static void look(Minecraft mc, net.minecraft.core.BlockPos pos) {
+        if (pos == null || mc.player == null) return;
+        net.minecraft.world.phys.Vec3 eye = mc.player.getEyePosition();
+        net.minecraft.world.phys.Vec3 c = net.minecraft.world.phys.Vec3.atCenterOf(pos);
+        double dx = c.x - eye.x;
+        double dy = c.y - eye.y;
+        double dz = c.z - eye.z;
+        float yaw = (float) Math.toDegrees(Math.atan2(-dx, dz));
+        float pitch = (float) -Math.toDegrees(Math.atan2(dy, Math.sqrt(dx * dx + dz * dz)));
+        mc.player.setYRot(yaw);
+        mc.player.setXRot(pitch);
+        mc.player.setYHeadRot(yaw);
+        mc.player.yRotO = yaw;
+        mc.player.xRotO = pitch;
+    }
+
+    private static void click(Minecraft mc, net.minecraft.core.BlockPos pos) {
+        if (pos == null || mc.gameMode == null || mc.player == null) {
+            Crates.LOG.error("[Crates][livetest] aucune caisse connue du client");
+            return;
+        }
+        var hit = new net.minecraft.world.phys.BlockHitResult(net.minecraft.world.phys.Vec3.atCenterOf(pos), net.minecraft.core.Direction.NORTH, pos, false);
+        var r = mc.gameMode.useItemOn(mc.player, net.minecraft.world.InteractionHand.MAIN_HAND, hit);
+        Crates.LOG.info("[Crates][livetest] clic sur {} : {}", pos.toShortString(), r);
+    }
+
+    private static void liveTick(Minecraft mc) {
+        ticks++;
+        if (liveStart < 0) {
+            if (mc.player != null && mc.level != null && fr.cobblepulse.crates.crate.Links.CLIENT_POSITIONS.size() >= 2) {
+                liveStart = ticks + 160;
+                Crates.LOG.info("[Crates][livetest] connecte, {} caisses connues", fr.cobblepulse.crates.crate.Links.CLIENT_POSITIONS.size());
+            } else if (ticks > 14000) {
+                Crates.LOG.error("[Crates][livetest] connexion jamais etablie");
+                mc.stop();
+            }
+            return;
+        }
+        int t = ticks - liveStart;
+        if (t < 0) return;
+        try {
+            switch (t) {
+                case 0 -> {
+                    if (mc.screen != null) mc.setScreen(null);
+                    look(mc, crateAt(0));
+                }
+                case 20 -> shot(mc, "live_monde");
+                case 22 -> click(mc, crateAt(0));
+                case 60 -> shot(mc, "live_apercu");
+                case 62 -> {
+                    if (mc.screen instanceof CrateScreen s) s.testOpen();
+                    else Crates.LOG.error("[Crates][livetest] apercu non ouvert ({})", mc.screen);
+                }
+                case 100 -> shot(mc, "live_roulette");
+                case 200 -> shot(mc, "live_roulette_resultat");
+                case 202 -> mc.setScreen(null);
+                case 214 -> shot(mc, "live_hologramme");
+                case 250 -> look(mc, crateAt(1));
+                case 252 -> click(mc, crateAt(1));
+                case 290 -> {
+                    if (mc.screen instanceof CrateScreen s) s.testOpen();
+                    else Crates.LOG.error("[Crates][livetest] apercu (roue) non ouvert ({})", mc.screen);
+                }
+                case 330 -> shot(mc, "live_roue");
+                case 430 -> shot(mc, "live_roue_resultat");
+                case 432 -> mc.setScreen(null);
+                case 444 -> shot(mc, "live_hologramme_roue");
+                case 450 -> Ui.send("builder_open");
+                case 490 -> shot(mc, "live_voeu");
+                case 492 -> {
+                    if (mc.screen instanceof BuilderScreen b) b.testOp("form", "Alola");
+                }
+                case 510 -> shot(mc, "live_voeu_forme");
+                case 512 -> {
+                    if (mc.screen instanceof BuilderScreen b) b.testConfirm();
+                }
+                case 550 -> shot(mc, "live_voeu_apres");
+                case 552 -> Ui.send("admin_open");
+                case 590 -> shot(mc, "live_editeur");
+                case 620 -> {
+                    Crates.LOG.info("[Crates][livetest] fin");
+                    mc.stop();
+                }
+                default -> {
+                }
+            }
+        } catch (Throwable e) {
+            Crates.LOG.error("[Crates][livetest] erreur a t={}", t, e);
+        }
+    }
+
     private static void tick(Minecraft mc) {
         ticks++;
         if (start < 0) {

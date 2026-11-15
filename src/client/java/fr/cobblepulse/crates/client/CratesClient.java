@@ -33,6 +33,7 @@ public final class CratesClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(Payloads.Data.TYPE, (payload, ctx) -> ctx.client().execute(() -> receive(payload.kind(), payload.json())));
         ClientPlayConnectionEvents.DISCONNECT.register((handler, mc) -> Links.CLIENT_POSITIONS.clear());
         if ("true".equals(System.getProperty("cobblepulse_crates.clienttest"))) ClientSelfTest.install();
+        if ("true".equals(System.getProperty("cobblepulse_crates.livetest"))) ClientSelfTest.installLive();
         Crates.LOG.info("[Crates] Client initialise");
     }
 

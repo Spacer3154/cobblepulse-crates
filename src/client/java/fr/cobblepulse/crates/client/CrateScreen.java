@@ -271,6 +271,11 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
         if (againBtn != null) againBtn.active = false;
     }
 
+    /** Auto-test : bouton d'ouverture. */
+    void testOpen() {
+        open();
+    }
+
     private void skip() {
         Ui.send("crate_skip");
         spinStart = System.currentTimeMillis() - spinMs - 1;
