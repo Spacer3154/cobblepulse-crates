@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblepulse_crates",
+  "version": "${version}",
+  "name": "CobblePulse Crates",
+  "description": "Caisses mysteres a cles thematiques (roulette, roue, hologrammes) et Voeu ADN pour remodeler ses Pokemon, pour CobblePulse / Cobblemon.",
+  "authors": ["CobblePulse"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/cobblepulse_crates/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["fr.cobblepulse.crates.Crates"],
+    "client": ["fr.cobblepulse.crates.client.CratesClient"]
+  },
+  "mixins": ["cobblepulse_crates.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*",
+    "cobblemon": ">=1.8.0"
+  },
+  "recommends": {
+    "luckperms": "*"
+  }
+}
