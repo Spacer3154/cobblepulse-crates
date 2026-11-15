@@ -1,0 +1,10 @@
+serveur pret : True
+> gamerule doDaylightCycle false
+> gamerule doWeatherCycle false
+> time set 6000
+> weather clear
+> lootbox selftest live
+$ xvfb-run -n 98 -s -screen 0 1280x720x24 /usr/bin/python3 -m portablemc --main-dir /home/runner/work/cobblepulse-crates/cobblepulse-crates/run-prod-client --work-dir /home/runner/work/cobblepulse-crates/cobblepulse-crates/run-prod-client start -u CratesTest --resolution 1280x720 --jvm /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64/bin/java --jvm-args=-Xmx3G -Dcobblepulse_crates.livetest=true -s 127.0.0.1 -p 25565 fabric:1.21.1:0.19.5
+client termine (70 s)
+> lootbox selftest report
+captures : ['client-latest.log', 'client.log', 'live_apercu.png', 'live_editeur.png', 'live_editeur_obsidienne.png', 'live_hologramme.png', 'live_hologramme_roue.png', 'live_monde.png', 'live_ouverture_monde.png', 'live_roue.png', 'live_roue_resultat.png', 'live_roulette.png', 'live_voeu.png', 'live_voeu_apres.png', 'live_voeu_forme.png', 'server.log', 'steps.txt']

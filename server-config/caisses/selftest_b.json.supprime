@@ -1,0 +1,32 @@
+{
+  "nom": "&dCaisse de test",
+  "description": "",
+  "cle": "cobblepulse_crates:clef_temps",
+  "cles_requises": 1,
+  "animation": "roue",
+  "duree_animation": 1.0,
+  "ouverture_rapide": true,
+  "maintenance": false,
+  "couleur": "#B48CF0",
+  "particule_attente": "",
+  "particule_ouverture": "minecraft:end_rod",
+  "son_ouverture": "",
+  "hologramme": true,
+  "recompenses": [
+    {
+      "id": "r95",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 1.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "minecraft:emerald",
+        "count": 2
+      },
+      "commandes": [],
+      "description": []
+    }
+  ]
+}

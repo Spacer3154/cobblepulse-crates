@@ -1,0 +1,13 @@
+{
+  "nom": "Légendaires et fabuleux",
+  "toutes_especes": false,
+  "etiquettes": [
+    "legendary",
+    "mythical"
+  ],
+  "espaces_de_noms": [],
+  "especes": [],
+  "exclure": [],
+  "exclure_etiquettes": [],
+  "implementees_seulement": true
+}

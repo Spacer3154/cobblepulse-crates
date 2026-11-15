@@ -1,0 +1,10 @@
+{
+  "nom": "Tous les Pokémon",
+  "toutes_especes": true,
+  "etiquettes": [],
+  "espaces_de_noms": [],
+  "especes": [],
+  "exclure": [],
+  "exclure_etiquettes": [],
+  "implementees_seulement": true
+}

@@ -1,0 +1,19 @@
+mod fabric-api 0.116.18+1.21.1 -> fabric-api-0.116.18+1.21.1.jar
+mod fabric-language-kotlin 1.14.2+kotlin.2.4.21 -> fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar
+mod luckperms v5.4.140-fabric -> LuckPerms-Fabric-5.4.140.jar
+mod cobblemon 1.8.4F -> Cobblemon-fabric-1.8.4+1.21.1.jar
+mod crates build/libs/cobblepulse-crates-1.0.0.jar
+===== run 1 =====
+server ready: True
+> lootbox selftest
+> lootbox selftest report
+> lootbox list
+[1] [15:44:14] [Server thread/INFO]: [Crates][selftest] SELFTEST SUMMARY pass=71 fail=0
+[1] [15:44:54] [Server thread/INFO]: [Crates][selftest] SELFTEST SUMMARY pass=72 fail=0
+exit code 0
+===== run 2 =====
+server ready: True
+> lootbox selftest persisted
+> lootbox reload
+[2] [15:45:29] [Server thread/INFO]: [Crates][selftest] SELFTEST SUMMARY pass=7 fail=0
+exit code 0

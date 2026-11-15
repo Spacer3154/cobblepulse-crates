@@ -1,0 +1,186 @@
+{
+  "nom": "&#A8E6FFCaisse de Givre-Étoile",
+  "description": "&7L'éclat glacé d'une nuit polaire.",
+  "cle": "cobblepulse_crates:clef_givre_etoile",
+  "cles_requises": 1,
+  "animation": "roulette",
+  "duree_animation": 6.0,
+  "ouverture_rapide": true,
+  "maintenance": false,
+  "couleur": "#A8E6FF",
+  "particule_attente": "minecraft:snowflake",
+  "particule_ouverture": "minecraft:snowflake",
+  "son_ouverture": "",
+  "hologramme": true,
+  "recompenses": [
+    {
+      "id": "r29",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 28.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:ice_stone",
+        "count": 2
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r30",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 26.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:exp_candy_m",
+        "count": 4
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r31",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 22.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:premier_ball",
+        "count": 10
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r32",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 14.0,
+      "rarete": "peu_commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:never_melt_ice",
+        "count": 1
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r33",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 12.0,
+      "rarete": "peu_commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:hp_up",
+        "count": 3
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r34",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 8.0,
+      "rarete": "rare",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:rare_candy",
+        "count": 3
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r35",
+      "type": "pokemon_aleatoire",
+      "nom": "&bPokémon des neiges &7(5 % chromatique)",
+      "icone": "cobblemon:premier_ball",
+      "poids": 6.0,
+      "rarete": "rare",
+      "annonce": false,
+      "commandes": [],
+      "description": [],
+      "aleatoire": {
+        "pool": "all",
+        "niveau_min": 20,
+        "niveau_max": 35,
+        "chance_shiny": 5.0,
+        "ivs_parfaits": 3,
+        "formes": "aleatoire"
+      }
+    },
+    {
+      "id": "r36",
+      "type": "pokemon",
+      "nom": "",
+      "icone": "",
+      "poids": 3.0,
+      "rarete": "epique",
+      "annonce": true,
+      "commandes": [],
+      "description": [],
+      "pokemon": {
+        "species": "frigibax",
+        "form": "",
+        "nickname": "",
+        "level": 20,
+        "nature": "",
+        "ability": "",
+        "gender": "",
+        "shiny": false,
+        "held_item": "",
+        "ball": "",
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": -1,
+          "spd": -1,
+          "spe": -1
+        },
+        "evs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [],
+        "tera_type": ""
+      }
+    },
+    {
+      "id": "r37",
+      "type": "pokemon_aleatoire",
+      "nom": "&6Pokémon légendaire",
+      "icone": "cobblemon:master_ball",
+      "poids": 0.8,
+      "rarete": "legendaire",
+      "annonce": true,
+      "commandes": [],
+      "description": [],
+      "aleatoire": {
+        "pool": "legendary",
+        "niveau_min": 40,
+        "niveau_max": 50,
+        "chance_shiny": 0.0,
+        "ivs_parfaits": 3,
+        "formes": "base"
+      }
+    }
+  ]
+}

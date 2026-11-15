@@ -1,0 +1,70 @@
+{
+  "maintenance_globale": false,
+  "distance_max": 8.0,
+  "annonces": true,
+  "son_tic": "minecraft:block.note_block.hat",
+  "hologramme": {
+    "actif": true,
+    "duree_secondes": 5.0,
+    "hauteur": 1.25,
+    "echelle_objet": 0.6
+  },
+  "particules": {
+    "ambiance": true,
+    "intervalle_ticks": 12,
+    "rayon_joueurs": 24.0
+  },
+  "journal": true,
+  "raretes": [
+    {
+      "id": "commun",
+      "nom": "Commun",
+      "couleur": "#B0B8C4",
+      "son": "minecraft:entity.experience_orb.pickup",
+      "volume": 0.8,
+      "tonalite": 1.0,
+      "particule": "minecraft:happy_villager",
+      "quantite": 10
+    },
+    {
+      "id": "peu_commun",
+      "nom": "Peu commun",
+      "couleur": "#6BE07A",
+      "son": "minecraft:entity.player.levelup",
+      "volume": 0.6,
+      "tonalite": 1.4,
+      "particule": "minecraft:composter",
+      "quantite": 16
+    },
+    {
+      "id": "rare",
+      "nom": "Rare",
+      "couleur": "#5FC8FF",
+      "son": "minecraft:block.amethyst_block.resonate",
+      "volume": 1.0,
+      "tonalite": 1.2,
+      "particule": "minecraft:glow",
+      "quantite": 24
+    },
+    {
+      "id": "epique",
+      "nom": "Épique",
+      "couleur": "#C48CFF",
+      "son": "minecraft:ui.toast.challenge_complete",
+      "volume": 0.7,
+      "tonalite": 1.3,
+      "particule": "minecraft:witch",
+      "quantite": 40
+    },
+    {
+      "id": "legendaire",
+      "nom": "Légendaire",
+      "couleur": "#FFD24A",
+      "son": "minecraft:ui.toast.challenge_complete",
+      "volume": 1.0,
+      "tonalite": 0.9,
+      "particule": "minecraft:totem_of_undying",
+      "quantite": 80
+    }
+  ]
+}

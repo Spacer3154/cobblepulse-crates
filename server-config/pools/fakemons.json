@@ -1,0 +1,12 @@
+{
+  "nom": "Fakemons",
+  "toutes_especes": false,
+  "etiquettes": [],
+  "espaces_de_noms": [
+    "*"
+  ],
+  "especes": [],
+  "exclure": [],
+  "exclure_etiquettes": [],
+  "implementees_seulement": false
+}

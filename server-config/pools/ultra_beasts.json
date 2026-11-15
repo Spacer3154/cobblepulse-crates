@@ -1,0 +1,12 @@
+{
+  "nom": "Ultra-Chimères",
+  "toutes_especes": false,
+  "etiquettes": [
+    "ultra_beast"
+  ],
+  "espaces_de_noms": [],
+  "especes": [],
+  "exclure": [],
+  "exclure_etiquettes": [],
+  "implementees_seulement": true
+}

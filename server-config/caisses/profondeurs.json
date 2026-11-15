@@ -1,0 +1,186 @@
+{
+  "nom": "&#3DBFAFCaisse des Profondeurs",
+  "description": "&7Marquée par la pression des abysses.",
+  "cle": "cobblepulse_crates:clef_profondeurs",
+  "cles_requises": 1,
+  "animation": "roue",
+  "duree_animation": 6.0,
+  "ouverture_rapide": true,
+  "maintenance": false,
+  "couleur": "#3DBFAF",
+  "particule_attente": "minecraft:nautilus",
+  "particule_ouverture": "minecraft:glow_squid_ink",
+  "son_ouverture": "",
+  "hologramme": true,
+  "recompenses": [
+    {
+      "id": "r47",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 28.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:water_stone",
+        "count": 2
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r48",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 26.0,
+      "rarete": "commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:dive_ball",
+        "count": 8
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r49",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 14.0,
+      "rarete": "peu_commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:mystic_water",
+        "count": 1
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r50",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 10.0,
+      "rarete": "peu_commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:deep_sea_scale",
+        "count": 1
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r51",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 10.0,
+      "rarete": "peu_commun",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:deep_sea_tooth",
+        "count": 1
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r52",
+      "type": "objet",
+      "nom": "",
+      "icone": "",
+      "poids": 7.0,
+      "rarete": "rare",
+      "annonce": false,
+      "objet": {
+        "id": "cobblemon:prism_scale",
+        "count": 1
+      },
+      "commandes": [],
+      "description": []
+    },
+    {
+      "id": "r53",
+      "type": "pokemon_aleatoire",
+      "nom": "&3Pokémon des abysses &7(3 IV parfaits)",
+      "icone": "cobblemon:dive_ball",
+      "poids": 6.0,
+      "rarete": "rare",
+      "annonce": false,
+      "commandes": [],
+      "description": [],
+      "aleatoire": {
+        "pool": "all",
+        "niveau_min": 20,
+        "niveau_max": 35,
+        "chance_shiny": 0.0,
+        "ivs_parfaits": 3,
+        "formes": "base"
+      }
+    },
+    {
+      "id": "r54",
+      "type": "pokemon",
+      "nom": "",
+      "icone": "",
+      "poids": 3.0,
+      "rarete": "epique",
+      "annonce": true,
+      "commandes": [],
+      "description": [],
+      "pokemon": {
+        "species": "lapras",
+        "form": "",
+        "nickname": "",
+        "level": 25,
+        "nature": "",
+        "ability": "",
+        "gender": "",
+        "shiny": false,
+        "held_item": "",
+        "ball": "",
+        "ivs": {
+          "hp": 31,
+          "atk": 31,
+          "def": 31,
+          "spa": -1,
+          "spd": -1,
+          "spe": -1
+        },
+        "evs": {
+          "hp": 0,
+          "atk": 0,
+          "def": 0,
+          "spa": 0,
+          "spd": 0,
+          "spe": 0
+        },
+        "moves": [],
+        "tera_type": ""
+      }
+    },
+    {
+      "id": "r55",
+      "type": "pokemon_aleatoire",
+      "nom": "&6Pokémon légendaire",
+      "icone": "cobblemon:master_ball",
+      "poids": 0.8,
+      "rarete": "legendaire",
+      "annonce": true,
+      "commandes": [],
+      "description": [],
+      "aleatoire": {
+        "pool": "legendary",
+        "niveau_min": 45,
+        "niveau_max": 55,
+        "chance_shiny": 0.0,
+        "ivs_parfaits": 3,
+        "formes": "base"
+      }
+    }
+  ]
+}
