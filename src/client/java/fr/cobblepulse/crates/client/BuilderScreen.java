@@ -545,7 +545,7 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
         int rw = pw - listW() - 26;
         int y = py + 32;
         Ui.panel(g, rx, y, 70, 70, Ui.CARD, Ui.BORDER);
-        Ui.icon(g, Ui.item(Ui.str(sel, "icon", "")), rx + 35, y + 35, 3.5f, 1.6f, false);
+        Ui.icon(g, Ui.item(Ui.str(sel, "icon", "")), rx + 35, y + 31, 3.5f, 1.5f, false);
         int tx = rx + 78;
         g.drawString(font, Ui.comp(Ui.str(sel, "name", "")), tx, y + 2, 0xFFFFFFFF, true);
         String info = Ui.comp(Ui.str(sel, "species", "")).getString() + "  ·  Nv. " + Ui.lng(sel, "level", 1) + "  ·  Forme " + Ui.str(sel, "form", "");

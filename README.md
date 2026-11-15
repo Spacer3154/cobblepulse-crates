@@ -138,4 +138,10 @@ Nœuds spéciaux :
 - `cobblepulsecrates.builder.bypass` — remodeler sans consommer de Vœu ADN (accordé explicitement uniquement).
 
 ## Tests automatiques (GitHub Actions)
-Chaque envoi sur `main` compile le mod, démarre un vrai serveur Fabric + Cobblemon 1.8.4 + LuckPerms (joueurs factices : liaison, aperçu, ouverture, clés, maintenance, permissions, chaque type de récompense, pools, hologrammes, déconnexion, éditeur, Vœu ADN complet, persistance après redémarrage) puis lance un vrai client sous xvfb pour capturer les écrans. Résultats et jar sur la branche `ci-output`.
+Chaque envoi sur `main` :
+1. compile le mod ;
+2. démarre un vrai serveur Fabric + Cobblemon 1.8.4 + LuckPerms et lance l'auto-test (joueurs factices : liaison, aperçu, ouverture, clés, maintenance, permissions LuckPerms, chaque type de récompense, pools, hologrammes, couvercle, déconnexion, éditeur, Vœu ADN complet), puis redémarre pour vérifier la persistance ;
+3. lance un vrai client sous xvfb pour capturer tous les écrans ;
+4. connecte ce client au serveur : clic sur une vraie caisse, roulette et roue, hologramme et couvercle dans le monde, changement de forme au Vœu ADN, éditeur.
+
+Résultats, captures et jar sur la branche `ci-output`.
