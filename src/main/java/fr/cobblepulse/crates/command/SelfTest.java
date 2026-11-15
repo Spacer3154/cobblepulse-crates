@@ -485,6 +485,7 @@ public final class SelfTest {
             res = BuilderService.apply(p, id, "form", new com.google.gson.JsonPrimitive(alola == null ? "alola" : alola.getName()));
             check("voeu : forme Alola (2)", res.ok() && alola != null && FormTools.same(v.getForm(), alola) && v.getShiny() && count(p, wish) == 6,
                     res.message() + " forme " + v.getForm().getName() + " aspects " + v.getAspects());
+            check("voeu : talent cache conserve apres changement de forme", AbilityTools.hasHidden(v), AbilityTools.current(v));
             info("vulpix apres forme : talent " + AbilityTools.current(v) + ", normaux " + AbilityTools.normal(v).stream().map(x -> x.getTemplate().getName()).toList());
             String other = null;
             for (var pa : AbilityTools.normal(v)) if (!pa.getTemplate().getName().equals(AbilityTools.current(v))) other = pa.getTemplate().getName();
@@ -557,6 +558,18 @@ public final class SelfTest {
         }
         Links.unlink(Links.dim(level), c);
         check("persistance : deliaison", Links.crateAt(level, c) == null, null);
+        try {
+            UUID dna = UUID.nameUUIDFromBytes("cpc-DnaTester".getBytes(StandardCharsets.UTF_8));
+            Pokemon v = null;
+            for (Pokemon pk : Cobblemon.INSTANCE.getStorage().getParty(dna, src.getServer().registryAccess())) {
+                if (pk != null && pk.getSpecies().getName().equalsIgnoreCase("vulpix")) v = pk;
+            }
+            check("persistance : Pokemon remodele (chromatique, nature, IV, EV)", v != null && v.getShiny()
+                    && v.getEffectiveNature().getName().getPath().equals("adamant") && v.getIvs().get(Stats.ATTACK) == 31
+                    && v.getEvs().get(Stats.SPEED) == 252, v == null ? "introuvable" : v.getForm().getName() + " " + AbilityTools.current(v));
+        } catch (Throwable t) {
+            check("persistance : Pokemon remodele", false, t.toString());
+        }
         Crates.LOG.info("[Crates][selftest] SELFTEST SUMMARY pass={} fail={}", pass, fail);
         return 1;
     }

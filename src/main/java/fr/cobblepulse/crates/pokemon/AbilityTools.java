@@ -16,7 +16,8 @@ public final class AbilityTools {
         List<PotentialAbility> out = new ArrayList<>();
         for (PotentialAbility pa : pk.getForm().getAbilities()) {
             try {
-                if (pa.isSatisfiedBy(pk.getAspects())) out.add(pa);
+                // Le talent cache n'est jamais "satisfait" (Cobblemon ne le tire pas au hasard) : il est toujours propose
+                if (pa instanceof HiddenAbility || pa.isSatisfiedBy(pk.getAspects())) out.add(pa);
             } catch (Throwable t) {
                 out.add(pa);
             }
@@ -57,6 +58,25 @@ public final class AbilityTools {
     public static void apply(Pokemon pk, PotentialAbility pa) {
         AbilityTemplate t = pa.getTemplate();
         pk.updateAbility(t.create(false, pa.getPriority()));
+    }
+
+    /** Emplacement du talent actuel : -2 = talent cache, -1 = inconnu, sinon rang parmi les talents standards. */
+    public static int slot(Pokemon pk) {
+        if (hasHidden(pk)) return -2;
+        List<PotentialAbility> n = normal(pk);
+        for (int i = 0; i < n.size(); i++) if (n.get(i).getTemplate().getName().equals(current(pk))) return i;
+        return -1;
+    }
+
+    /** Remet le talent dans le meme emplacement (apres un changement de forme). */
+    public static void restoreSlot(Pokemon pk, int slot) {
+        if (slot == -2) {
+            PotentialAbility h = hidden(pk);
+            if (h != null && !hasHidden(pk)) apply(pk, h);
+        } else if (slot >= 0) {
+            List<PotentialAbility> n = normal(pk);
+            if (slot < n.size() && !n.get(slot).getTemplate().getName().equals(current(pk))) apply(pk, n.get(slot));
+        }
     }
 
     public static PotentialAbility find(Pokemon pk, String name, boolean hidden) {

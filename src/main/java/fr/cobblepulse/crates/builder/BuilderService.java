@@ -364,7 +364,10 @@ public final class BuilderService {
                 cost = prix.forme;
                 what = "Forme " + FormTools.label(pk.getSpecies(), target);
                 action = () -> {
+                    int slot = AbilityTools.slot(pk);
                     if (!FormTools.apply(pk, target)) throw new IllegalStateException("forme non appliquée");
+                    // Le talent garde son emplacement (talent cache -> talent cache de la nouvelle forme)
+                    AbilityTools.restoreSlot(pk, slot);
                 };
             }
             case "ivs" -> {
