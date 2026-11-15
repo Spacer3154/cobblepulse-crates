@@ -28,7 +28,8 @@ final class LuckPermsHook {
             user.data().clear(n -> n.getKey().equalsIgnoreCase(node));
             if (value != null) user.data().add(Node.builder(node).value(value).build());
         }).get(10, TimeUnit.SECONDS);
-        User u = lp.getUserManager().getUser(uuid);
+        // Utilisateur garde en cache (joueurs factices de l'auto-test, hors ligne)
+        User u = lp.getUserManager().loadUser(uuid).get(10, TimeUnit.SECONDS);
         if (u != null) u.getCachedData().invalidate();
     }
 }

@@ -1,0 +1,54 @@
+# =====================================================================
+#  CobblePulse Crates - Messages
+#  Codes couleur : &a, &l, &#RRGGBB et <#RRGGBB>texte</#>. Variables : %nom%.
+#  %prefix% est remplace par general.prefix, %prefix_adn% par builder.prefix.
+# =====================================================================
+
+[general]
+prefix = "<#B48CF0>✦ Caisses</#> &8» &7"
+no_permission = "%prefix%&cVous n'avez pas la permission."
+players_only = "%prefix%&cCommande réservée aux joueurs."
+no_client = "%prefix%&cCet écran nécessite le mod CobblePulse Crates côté client (modpack)."
+reloaded = "%prefix%&aConfiguration rechargée : &f%crates% caisses&a, &f%pools% pools&a, &f%links% conteneurs liés&a."
+
+[caisse]
+unknown = "%prefix%&cCaisse inconnue : &f%crate%"
+not_container = "%prefix%&cVisez un conteneur (coffre, tonneau, coffre de l'Ender...) à moins de 6 blocs."
+linked = "%prefix%&aConteneur lié à la caisse &f%crate% &8(%world% %x% %y% %z%)&a."
+already_linked = "%prefix%&cCe conteneur est déjà lié à la caisse &f%crate%&c."
+unlinked = "%prefix%&aConteneur délié de la caisse &f%crate%&a."
+unlinked_all = "%prefix%&a%count% conteneur(s) délié(s) de la caisse &f%crate%&a."
+not_linked = "%prefix%&cAucun conteneur n'est lié à la caisse &f%crate%&c."
+not_linked_any = "%prefix%&cVisez un conteneur lié, ou précisez le nom de la caisse."
+other_crate = "%prefix%&cCe conteneur appartient à la caisse &f%other%&c, pas à &f%crate%&c."
+protected = "%prefix%&cCe conteneur est la %name%&c. Déliez-le d'abord avec &f/lootbox unset %crate%&c."
+maintenance = "%prefix%&cLa %crate% &cest en maintenance. Votre clé n'a pas été consommée."
+maintenance_global = "%prefix%&cLes caisses sont en maintenance. Votre clé n'a pas été consommée."
+no_key = "%prefix%&cIl vous faut &f%need% × %key%&c pour ouvrir cette caisse."
+bad_key = "%prefix%&cClé introuvable pour cette caisse (%key%). Prévenez un administrateur."
+no_open_perm = "%prefix%&cVous n'avez pas la permission d'ouvrir cette caisse."
+too_far = "%prefix%&cApprochez-vous de la caisse pour l'ouvrir."
+busy = "%prefix%&cUne ouverture est déjà en cours."
+empty = "%prefix%&cCette caisse ne contient aucune récompense."
+remote = "%prefix%&7Aperçu à distance : rendez-vous à la caisse pour l'ouvrir."
+error = "%prefix%&cAucune récompense n'a pu être préparée (%error%). Votre clé n'a pas été consommée."
+won = "%prefix%&7Vous avez obtenu %reward% &7!"
+announce = "<#FFD24A>✦</#> &e%player% &7a obtenu %reward% &7dans la %crate%&7 !"
+toggled_on = "%prefix%&cMaintenance activée pour la caisse &f%crate%&c."
+toggled_off = "%prefix%&aMaintenance désactivée pour la caisse &f%crate%&a."
+toggled_all_on = "%prefix%&cMaintenance globale activée : toutes les caisses sont verrouillées."
+toggled_all_off = "%prefix%&aMaintenance globale désactivée."
+givekey = "%prefix%&a%count% × %key% &adonnée(s) à &f%player%&a."
+givekey_received = "%prefix%&7Vous avez reçu &f%count% × %key%&7."
+unknown_key = "%prefix%&cClé inconnue : &f%key% &7(obsidienne, songes, racine, givre_etoile, solaire, profondeurs, ombre, temps, celeste, coeur_dragon ou nom d'une caisse)."
+list_header = "%prefix%&f%count% caisses%maint%"
+list_entry = "&8- &f%crate% &7(%name%&7) &8: &7%rewards% récompenses, %links% conteneur(s)%maint%"
+
+[builder]
+prefix = "<#C9B8FF>✦ Vœu ADN</#> &8» &7"
+disabled = "%prefix_adn%&cLe menu Vœu ADN est désactivé."
+refused = "%prefix_adn%&c%reason%"
+done = "%prefix_adn%&a%what% &7appliqué à &f%pokemon% &8(-%cost% Vœu(x) ADN)"
+done_bypass = "%prefix_adn%&a%what% &7appliqué à &f%pokemon% &8(gratuit)"
+givewish = "%prefix_adn%&a%count% Vœu(x) ADN donné(s) à &f%player%&a."
+givewish_received = "%prefix_adn%&7Vous avez reçu &d%count% Vœu(x) ADN&7. Ouvrez le menu avec &f/cpbuilder&7."

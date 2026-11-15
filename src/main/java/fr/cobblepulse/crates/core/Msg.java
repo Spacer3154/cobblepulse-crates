@@ -24,6 +24,7 @@ public final class Msg {
 
     public static String format(String key, Object... kv) {
         String s = raw(key);
+        if (s.contains("%prefix_adn%")) s = s.replace("%prefix_adn%", raw("builder.prefix"));
         if (s.contains("%prefix%")) s = s.replace("%prefix%", raw("general.prefix"));
         for (int i = 0; i + 1 < kv.length; i += 2) {
             s = s.replace("%" + kv[i] + "%", String.valueOf(kv[i + 1]));
@@ -33,6 +34,19 @@ public final class Msg {
 
     public static MutableComponent get(String key, Object... kv) {
         return TextUtil.legacy(format(key, kv));
+    }
+
+    /** Message dont une variable est un composant (nom d'objet traduit, Pokemon...). */
+    public static MutableComponent withComponent(String key, String var, Component value, Object... kv) {
+        String s = format(key, kv);
+        String token = "%" + var + "%";
+        int i = s.indexOf(token);
+        if (i < 0) return TextUtil.legacy(s);
+        MutableComponent out = Component.empty();
+        out.append(TextUtil.legacy(s.substring(0, i)));
+        out.append(value);
+        out.append(TextUtil.legacy(s.substring(i + token.length())));
+        return out;
     }
 
     public static boolean reachable(ServerPlayer p) {
