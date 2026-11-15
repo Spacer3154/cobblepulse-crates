@@ -303,20 +303,21 @@ final class ClientSelfTest {
             List<ItemStack> items = new ArrayList<>();
             for (KeyType k : KeyType.values()) items.add(new ItemStack(ModItems.KEYS.get(k)));
             items.add(new ItemStack(ModItems.VOEU_ADN, 16));
-            int x0 = 20;
-            int y0 = 16;
+            int colW = Math.min(290, (width - 30) / 2);
+            int x0 = (width - colW * 2 - 10) / 2;
+            int y0 = 8;
             for (int i = 0; i < items.size(); i++) {
                 ItemStack s = items.get(i);
                 int col = i % 2;
                 int row = i / 2;
-                int x = x0 + col * 300;
-                int y = y0 + row * 40;
-                Ui.panel(g, x, y, 290, 36, Ui.PANEL, Ui.BORDER);
+                int x = x0 + col * (colW + 10);
+                int y = y0 + row * 38;
+                Ui.panel(g, x, y, colW, 36, Ui.PANEL, Ui.BORDER);
                 Ui.item(g, s, x + 4, y + 2, 2f, true);
                 g.renderItem(s, x + 44, y + 10);
                 g.drawString(font, s.getHoverName(), x + 66, y + 6, 0xFFFFFFFF, true);
                 List<Component> tip = s.getTooltipLines(net.minecraft.world.item.Item.TooltipContext.EMPTY, null, net.minecraft.world.item.TooltipFlag.NORMAL);
-                if (tip.size() > 1) g.drawString(font, Ui.cut(tip.get(1).getString(), 214), x + 66, y + 20, 0xFF8E9AAB, false);
+                if (tip.size() > 1) g.drawString(font, Ui.cut(tip.get(1).getString(), colW - 72), x + 66, y + 20, 0xFF8E9AAB, false);
             }
         }
     }

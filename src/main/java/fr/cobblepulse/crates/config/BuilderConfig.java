@@ -13,10 +13,14 @@ public final class BuilderConfig {
     public boolean autoriserPc = true;
     /** Un Pokemon chromatique peut redevenir normal (meme prix). */
     public boolean shinyReversible = true;
-    /** Formes jamais proposees (nom de forme ou aspect, sans tenir compte des majuscules). */
+    /** Formes jamais proposees : nom de forme ou aspect (toutes especes), ou "espece:forme" / "espece:*". */
     public List<String> formesInterdites = new ArrayList<>(List.of("mega", "mega_x", "mega_y", "megax", "megay", "gmax", "gigantamax",
             "dynamax", "eternamax", "primal", "ultra", "zen", "galar_zen", "galarzen", "blade", "school", "busted", "complete", "pirouette",
-            "hangry", "noice", "gulping", "gorging", "stellar", "terastal", "crowned", "sunshine", "hero", "white_striped_eternal"));
+            "hangry", "noice", "gulping", "gorging", "stellar", "terastal", "crowned", "sunshine", "hero",
+            "arceus:*", "silvally:*", "genesect:*", "ogerpon:*", "necrozma:*", "kyurem:*", "calyrex:*", "castform:*", "cherrim:*",
+            "cramorant:*", "terapagos:*", "giratina:origin", "dialga:origin", "palkia:origin", "zacian:crowned", "zamazenta:crowned",
+            "groudon:primal", "kyogre:primal", "zygarde:complete", "aegislash:blade", "wishiwashi:school", "mimikyu:busted",
+            "morpeko:hangry", "eiscue:noice", "palafin:hero", "darmanitan:zen"));
     /** Especes que le menu refuse de modifier. */
     public List<String> especesInterdites = new ArrayList<>();
     /** Refuse les formes qui exigent un objet tenu ou une capacite (plaques d'Arceus, Giratina Originel...). */

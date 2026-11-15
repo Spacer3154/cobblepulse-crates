@@ -110,7 +110,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
         com.mojang.blaze3d.platform.Window win = minecraft.getWindow();
         int cur = (int) win.getGuiScale();
         int s = cur;
-        while (s > 1 && (win.getWidth() / s < 520 || win.getHeight() / s < 300)) s--;
+        while (s > 1 && (win.getWidth() / s < 600 || win.getHeight() / s < 320)) s--;
         if (s != cur) {
             if (savedGuiScale < 0) savedGuiScale = cur;
             win.setGuiScale(s);
@@ -161,17 +161,18 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
                 tab = idx;
                 formScroll = 0;
                 rebuild();
-            }).bounds(px + 190 + i * 92, ty, 88, 18).build());
+            }).bounds(px + 132 + i * 80, ty, 76, 18).build());
             b.active = tab != i;
         }
         boolean gm = Ui.bool(general, "maintenance_globale", false);
-        Button gmb = addRenderableWidget(Button.builder(Component.literal(gm ? "§cMaintenance globale : OUI" : "Maintenance globale : non"), x -> {
+        Button gmb = addRenderableWidget(Button.builder(Component.literal(gm ? "§cMaint. globale : OUI" : "Maint. globale : non"), x -> {
             JsonObject a = new JsonObject();
             a.addProperty("id", "*");
             Ui.send("admin_toggle", a);
-        }).bounds(px + pw - 248, ty, 168, 18).build());
+        }).bounds(px + pw - 204, ty, 126, 18).build());
+        gmb.setTooltip(Tooltip.create(Component.literal("Maintenance de toutes les caisses : aperçu possible, ouverture bloquée")));
         gmb.active = perm("toggle");
-        addRenderableWidget(Button.builder(Component.literal("Recharger"), x -> Ui.send("admin_reload")).bounds(px + pw - 76, ty, 70, 18).build())
+        addRenderableWidget(Button.builder(Component.literal("Recharger"), x -> Ui.send("admin_reload")).bounds(px + pw - 74, ty, 68, 18).build())
                 .setTooltip(Tooltip.create(Component.literal("Relit les fichiers JSON (les modifications non enregistrées sont perdues)")));
         int top = py + 28;
         int bottom = py + ph - 6;
@@ -199,11 +200,11 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
                         sub = idx;
                         formScroll = 0;
                         rebuild();
-                    }).bounds(rx + i * 112, top + 2, 108, 18).build());
+                    }).bounds(rx + i * 104, top + 2, 100, 18).build());
                     b.active = sub != i;
                 }
                 Button save = addRenderableWidget(Button.builder(Component.literal(dirty.contains(selected) ? "§eEnregistrer *" : "Enregistrer"), x -> saveCrate())
-                        .bounds(px + pw - 212, bottom - 20, 100, 18).build());
+                        .bounds(px + pw - 178, bottom - 20, 86, 18).build());
                 save.active = perm("editor");
                 Button del = addRenderableWidget(Button.builder(Component.literal("§cSupprimer"), x -> {
                     if (!Screen.hasShiftDown()) {
@@ -215,7 +216,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
                     lastSaved = selected;
                     dirty.remove(selected);
                     Ui.send("admin_delete_crate", a);
-                }).bounds(px + pw - 106, bottom - 20, 100, 18).build());
+                }).bounds(px + pw - 88, bottom - 20, 82, 18).build());
                 del.setTooltip(Tooltip.create(Component.literal("Maj + clic : supprime la caisse et délie ses conteneurs (le fichier est renommé en .supprime)")));
                 if (sub == 0) {
                     form = new Form(this::addRenderableWidget, rx, top + 26, rw, bottom - top - 54).onChange(() -> markDirty());
@@ -223,15 +224,10 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
                     form.setScroll(formScroll);
                     form.layout();
                 } else if (sub == 1) {
-                    String[] types = {"objet", "main", "commande", "pokemon", "pokemon_aleatoire"};
-                    String[] names = {"+ Objet", "+ Objet en main", "+ Commande", "+ Pokémon", "+ Pokémon aléatoire"};
-                    int bx = rx;
-                    for (int i = 0; i < types.length; i++) {
-                        String t = types[i];
-                        int w = font.width(names[i]) + 14;
-                        addRenderableWidget(Button.builder(Component.literal(names[i]), x -> addReward(t)).bounds(bx, bottom - 20, w, 18).build());
-                        bx += w + 4;
-                    }
+                    addRenderableWidget(Button.builder(Component.literal("+ Ajouter"), x -> addReward("objet")).bounds(rx, bottom - 20, 70, 18).build())
+                            .setTooltip(Tooltip.create(Component.literal("Nouvelle récompense (le type se choisit dans l'éditeur : objet, commande, Pokémon, Pokémon aléatoire)")));
+                    addRenderableWidget(Button.builder(Component.literal("+ Objet en main"), x -> addReward("main")).bounds(rx + 74, bottom - 20, 96, 18).build())
+                            .setTooltip(Tooltip.create(Component.literal("Ajoute l'objet exact tenu dans la main principale")));
                 }
             }
         } else if (tab == 1) {
@@ -459,9 +455,9 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
             if (c == null) {
                 Ui.centered(g, "Créez une caisse à gauche.", rx + rw / 2, top + 40, Ui.MUTED);
             } else if (sub == 1) {
-                rewardList(g, mouseX, mouseY, rx, top + 26, rw, bottom - top - 54, c);
+                rewardList(g, mouseX, mouseY, rx, top + 38, rw, bottom - top - 66, c);
             } else if (sub == 2) {
-                linkList(g, mouseX, mouseY, rx, top + 26, rw, c);
+                linkList(g, mouseX, mouseY, rx, top + 38, rw, c);
             }
         }
         if (form != null) form.render(g, mouseX, mouseY);
@@ -551,7 +547,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
         }
         int maxScroll = Math.max(0, list.size() * ROW - h);
         rewardScroll = Math.max(0, Math.min(maxScroll, rewardScroll));
-        Ui.text(g, "Poids total : " + Ui.num(Math.round(total)) + "  ·  clic sur une ligne pour la modifier", x, y0 - 10, Ui.MUTED);
+        Ui.text(g, Ui.cut("Poids total : " + Ui.num(Math.round(total)) + "  ·  clic sur une ligne pour la modifier", w), x, y0 - 11, Ui.MUTED);
         g.enableScissor(x, y0, x + w, y0 + h);
         List<Runnable> deferred = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
@@ -610,7 +606,7 @@ public final class AdminScreen extends Screen implements CratesClient.Toaster {
 
     private void linkList(GuiGraphics g, int mouseX, int mouseY, int x, int y0, int w, JsonObject c) {
         JsonArray links = Ui.arr(c, "_links");
-        Ui.text(g, "Liez un conteneur en le visant : /lootbox set " + selected + "  ·  délier : /lootbox unset " + selected, x, y0 - 10, Ui.MUTED);
+        Ui.text(g, Ui.cut("Lier : visez un conteneur et /lootbox set " + selected + "  ·  délier : /lootbox unset " + selected, w), x, y0 - 11, Ui.MUTED);
         if (links.isEmpty()) {
             Ui.centered(g, "Aucun conteneur lié à cette caisse.", x + w / 2, y0 + 30, Ui.MUTED);
             return;

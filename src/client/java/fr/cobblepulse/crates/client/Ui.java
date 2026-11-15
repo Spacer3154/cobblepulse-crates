@@ -137,6 +137,31 @@ public final class Ui {
         send(action, new JsonObject());
     }
 
+    // ------------------------------------------------------------------ Echelle d'interface
+
+    /**
+     * Reduit l'echelle d'interface tant que l'ecran fait moins de minW x minH (en pixels d'interface).
+     * @return l'echelle d'origine a restaurer a la fermeture, ou -1 si rien n'a change.
+     */
+    public static int fitScale(net.minecraft.client.gui.screens.Screen screen, int minW, int minH, int saved) {
+        com.mojang.blaze3d.platform.Window win = Minecraft.getInstance().getWindow();
+        int cur = (int) win.getGuiScale();
+        int s = cur;
+        while (s > 1 && (win.getWidth() / s < minW || win.getHeight() / s < minH)) s--;
+        if (s != cur) {
+            if (saved < 0) saved = cur;
+            win.setGuiScale(s);
+            screen.width = win.getGuiScaledWidth();
+            screen.height = win.getGuiScaledHeight();
+        }
+        return saved;
+    }
+
+    public static int restoreScale(int saved) {
+        if (saved > 0) Minecraft.getInstance().getWindow().setGuiScale(saved);
+        return -1;
+    }
+
     // ------------------------------------------------------------------ Couleurs et sons
 
     public static int argb(int alpha, int rgb) {

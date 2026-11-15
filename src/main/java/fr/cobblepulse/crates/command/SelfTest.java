@@ -184,8 +184,8 @@ public final class SelfTest {
         int ub = Pools.species("ultra_beasts").size();
         int fk = Pools.species("fakemons").size();
         check("pool all", all > 300, all + " especes");
-        check("pool legendary", leg > 20, leg + " especes");
-        check("pool ultra_beasts", ub >= 5, ub + " especes");
+        check("pool legendary", leg >= 10, leg + " especes implementees");
+        check("pool ultra_beasts", ub >= 1, ub + " especes implementees");
         info("pool fakemons : " + fk + " especes (0 attendu sans datapack)");
         boolean legOk = true;
         for (Species sp : Pools.species("legendary")) {

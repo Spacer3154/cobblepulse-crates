@@ -151,11 +151,8 @@ public final class CrateService {
             Msg.send(p, "caisse.unknown", "crate", crateId);
             return;
         }
-        if (!Net.hasClient(p)) {
-            Msg.send(p, "general.no_client");
-            return;
-        }
         Net.send(p, "crate_preview", Views.preview(p, c, pos));
+        if (!Net.hasClient(p)) Msg.send(p, "general.no_client");
     }
 
     // ------------------------------------------------------------------ Ouverture

@@ -45,11 +45,30 @@ public final class FormTools {
         return f == null || std == null || key(f.getName()).equals(key(std.getName())) || f.getAspects().isEmpty();
     }
 
-    /** Forme interdite par la configuration (Mega, Dynamax, formes de combat, formes a objet). */
-    public static boolean forbidden(FormData f) {
+    /**
+     * Forme interdite par la configuration (Mega, Dynamax, formes de combat, formes a objet).
+     * Entrees : "mega" (toutes especes) ou "espece:forme" / "espece:*" (ex. arceus:*, giratina:origin).
+     */
+    public static boolean forbidden(Species s, FormData f) {
         BuilderConfig cfg = Cfg.builder;
         Set<String> bad = new HashSet<>();
-        for (String b : cfg.formesInterdites) bad.add(key(b));
+        String sk = key(s.getName());
+        String sp = key(s.getResourceIdentifier().getPath());
+        for (String b : cfg.formesInterdites) {
+            if (b == null) continue;
+            int c = b.indexOf(':');
+            if (c < 0) {
+                bad.add(key(b));
+                continue;
+            }
+            String bs = key(b.substring(0, c));
+            String bf = b.substring(c + 1).trim();
+            if (!bs.equals(sk) && !bs.equals(sp)) continue;
+            if (bf.equals("*") && !isStandard(s, f)) return true;
+            String fk = key(bf);
+            if (fk.equals(key(f.getName()))) return true;
+            for (String a : f.getAspects()) if (fk.equals(key(a))) return true;
+        }
         if (bad.contains(key(f.getName()))) return true;
         for (String a : f.getAspects()) if (bad.contains(key(a))) return true;
         String n = key(f.getName());
@@ -69,7 +88,7 @@ public final class FormTools {
     public static List<FormData> allowed(Species s) {
         List<FormData> out = new ArrayList<>();
         for (FormData f : forms(s)) {
-            if (isStandard(s, f) || !forbidden(f)) out.add(f);
+            if (isStandard(s, f) || !forbidden(s, f)) out.add(f);
         }
         return out;
     }

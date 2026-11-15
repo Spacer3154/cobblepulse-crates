@@ -170,10 +170,19 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
 
     // ------------------------------------------------------------------ Mise en page
 
+    private int savedScale = -1;
+
+    @Override
+    public void removed() {
+        super.removed();
+        savedScale = Ui.restoreScale(savedScale);
+    }
+
     @Override
     protected void init() {
+        savedScale = Ui.fitScale(this, 540, 330, savedScale);
         pw = Math.min(width - 12, 540);
-        ph = Math.min(height - 12, 316);
+        ph = Math.min(height - 12, 320);
         px = (width - pw) / 2;
         py = (height - ph) / 2;
         rebuild();
@@ -217,7 +226,7 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
         if (sel == null || !sel.has("uuid")) return;
         int rx = px + listW() + 18;
         int rw = pw - listW() - 26;
-        int ay = py + 112;
+        int ay = op == null ? py + 152 : py + 104;
         boolean locked = Ui.bool(sel, "locked", false) || !Ui.bool(root, "canUse", true);
         if (op == null) {
             int cw = (rw - 6) / 2;
@@ -572,15 +581,15 @@ public final class BuilderScreen extends Screen implements CratesClient.Toaster 
             g.fill(rx + rw - 30, sy - 1, rx + rw - 27, sy + 2, Ui.PURPLE);
             Ui.scaled(g, "EV", rx + rw - 25, sy - 2, Ui.MUTED, 0.75f);
         } else {
-            opHeader(g, rx, py + 104, rw);
+            opHeader(g, rx, py + 108, rw);
         }
     }
 
     private void opHeader(GuiGraphics g, int rx, int y, int rw) {
         String title = "";
         for (String[] o : OPS) if (o[0].equals(op)) title = o[1] + " — " + o[2];
-        Ui.text(g, title, rx, y - 2, Ui.argb(0xFF, IRIS));
-        int ay = py + 112;
+        Ui.text(g, title, rx, y - 8, Ui.argb(0xFF, IRIS));
+        int ay = py + 104;
         switch (op) {
             case "shiny" -> {
                 boolean s = Ui.bool(sel, "shiny", false);

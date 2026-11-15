@@ -341,7 +341,10 @@ public final class BuilderService {
                 action = () -> AbilityTools.apply(pk, pa);
             }
             case "nature" -> {
-                Nature n = Natures.getNature(str(value).contains(":") ? str(value) : "cobblemon:" + str(value).toLowerCase(Locale.ROOT));
+                String nv = str(value).trim().toLowerCase(Locale.ROOT);
+                net.minecraft.resources.ResourceLocation nrl = nv.contains(":") ? net.minecraft.resources.ResourceLocation.tryParse(nv)
+                        : net.minecraft.resources.ResourceLocation.tryParse("cobblemon:" + nv);
+                Nature n = nrl == null ? null : Natures.getNature(nrl);
                 if (n == null) return refuse(p, "Nature inconnue : " + str(value));
                 if (n == pk.getEffectiveNature()) return refuse(p, "Ce Pokémon a déjà cette nature.");
                 cost = prix.nature;

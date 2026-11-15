@@ -157,10 +157,8 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
         toast = message;
         toastOk = ok;
         toastUntil = System.currentTimeMillis() + 4000;
-        if (mode == Mode.SPIN && !ok) {
-            mode = Mode.PREVIEW;
-            rebuild();
-        }
+        if (mode == Mode.SPIN && !ok) mode = Mode.PREVIEW;
+        if (!ok) rebuild();
     }
 
     private JsonObject pick(Random rnd) {
@@ -201,8 +199,17 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
 
     // ------------------------------------------------------------------ Mise en page
 
+    private int savedScale = -1;
+
+    @Override
+    public void removed() {
+        super.removed();
+        savedScale = Ui.restoreScale(savedScale);
+    }
+
     @Override
     protected void init() {
+        savedScale = Ui.fitScale(this, 420, 260, savedScale);
         pw = Math.min(width - 16, 460);
         ph = Math.min(height - 16, 300);
         px = (width - pw) / 2;
@@ -478,7 +485,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
         int rx = px + 10;
         int rw = pw - 20;
         int rh = 84;
-        int ry = py + 52 + (mode == Mode.RESULT ? 0 : 24);
+        int ry = py + 52;
         int pitch = CARD_W + CARD_GAP;
         double t = progress();
         double off = mode == Mode.RESULT ? stripTarget : stripTarget * ease(t);
@@ -517,7 +524,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
             g.fill(marker - 5 + i, ry + rh + 7 - i, marker + 5 - i, ry + rh + 8 - i, mc);
         }
         if (mode == Mode.SPIN) {
-            Ui.centered(g, "Ouverture…", px + pw / 2, ry - 18, Ui.MUTED);
+            Ui.centered(g, "Ouverture…", px + pw / 2, ry + rh + 16, Ui.MUTED);
         } else {
             resultPanel(g, ry + rh + 12);
         }
@@ -554,7 +561,7 @@ public final class CrateScreen extends Screen implements CratesClient.Toaster {
         double phi = mode == Mode.RESULT ? wheelTarget : wheelTarget * ease(t);
         double theta = Math.PI * 2 / n;
         int top = py + 40;
-        int bottom = py + ph - (mode == Mode.RESULT ? 86 : 34);
+        int bottom = py + ph - 86;
         int r = Math.max(30, Math.min((bottom - top) / 2 - 6, 96));
         int cx = px + pw / 2;
         int cy = top + (bottom - top) / 2;
